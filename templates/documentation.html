@@ -79,133 +79,146 @@
   </head>
   <body>
     <div class="container">
-      <h1>Título: <span class="placeholder">Go (Golang) e Gin</span></h1>
+      <h1>Servidor em Go (Golang) com o Framework Gin</h1>
       <p>
         <strong>Participantes:</strong>
-        <span class="placeholder"
-          >Bruno José Adriano, Mel Izis Godri, Pedro Padilha</span
-        >
+        Bruno José Adriano, Mel Izis Godri e Pedro Padilha
       </p>
 
       <section>
         <h2>Descrição da tecnologia escolhida</h2>
-        <p class="placeholder">
-          Go (ou Golang) é uma linguagem de programação de código aberto criada
-          pelo Google, conhecida por ser simples, confiável e eficiente. Ela
-          combina a simplicidade de linguagens dinâmicas com o desempenho de
-          linguagens compiladas, sendo ideal para o desenvolvimento de sistemas
-          concorrentes e distribuídos. Suas principais aplicações incluem
-          servidores web, ferramentas de automação e serviços de rede de alta
-          performance.
+        <p>
+          O <strong>Go</strong>, ou <em>Golang</em>, é uma linguagem de
+          programação de código aberto desenvolvida pelo Google. Ela foi
+          projetada para unir simplicidade e alto desempenho, oferecendo
+          compilação rápida, tipagem estática e excelente suporte à
+          concorrência. <br /><br />
+          O <strong>framework Gin</strong> é uma biblioteca popular do
+          ecossistema Go para o desenvolvimento de servidores web. Ele oferece
+          uma sintaxe limpa, tratamento de requisições HTTP, gerenciamento de
+          rotas e suporte nativo a JSON — tudo com foco em eficiência e
+          facilidade de uso.
         </p>
       </section>
 
       <section>
-        <h2>Principais pontos fortes e diferenciais</h2>
-        <ul class="placeholder">
+        <h2>Seção 1: Pontos Fortes e Filosofia</h2>
+        <ul>
           <li>
-            Alto desempenho: Go é compilado diretamente para código de máquina,
-            o que o torna extremamente rápido.
+            <strong>Performance elevada:</strong> Go é compilado em código de
+            máquina, resultando em execução extremamente rápida e eficiente.
           </li>
           <li>
-            Simplicidade e produtividade: Sintaxe limpa e fácil de ler,
-            facilitando o aprendizado e a manutenção do código.
+            <strong>Concorrência simples:</strong> As goroutines e os channels
+            facilitam o processamento paralelo de múltiplas requisições.
           </li>
           <li>
-            Concorrência nativa: Através das goroutines e channels, permite
-            lidar com múltiplas requisições simultâneas com baixo consumo de
-            recursos.
+            <strong>Sintaxe minimalista:</strong> A linguagem prioriza clareza e
+            padronização, evitando código verboso.
           </li>
           <li>
-            Segurança e robustez: Tipagem estática e forte sistema de tratamento
-            de erros.
+            <strong>Ecossistema moderno:</strong> O Go inclui ferramentas
+            nativas de testes, formatação e controle de dependências.
           </li>
           <li>
-            Framework minimalista (Gin): Facilita a criação de rotas e
-            middleware, com suporte nativo para JSON e tratamento de requisições
-            HTTP.
+            <strong>Framework Gin:</strong> Oferece rotas intuitivas,
+            middlewares leves e excelente integração com JSON.
+          </li>
+        </ul>
+        <p>
+          <strong>Caso de uso ideal:</strong> APIs RESTful, microsserviços e
+          sistemas em nuvem que exigem escalabilidade e baixa latência.
+        </p>
+      </section>
+
+      <section>
+        <h2>Seção 2: Pré-Requisitos e Setup</h2>
+        <ul>
+          <li>
+            Instalar o Go:
+            <a href="https://go.dev/doc/install" target="_blank"
+              >https://go.dev/doc/install</a
+            >
+          </li>
+          <li>
+            Criar o módulo do projeto:
+            <pre><code>$ go mod init servidor-gin</code></pre>
+          </li>
+          <li>
+            Instalar o framework Gin:
+            <pre><code>$ go get -u github.com/gin-gonic/gin</code></pre>
+          </li>
+          <li>
+            Criar uma pasta chamada <code>templates</code> e adicionar o arquivo
+            <code>documentation.html</code> (esta página).
+          </li>
+          <li>
+            Executar o servidor:
+            <pre><code>$ go run server.go</code></pre>
           </li>
         </ul>
       </section>
 
       <section>
-        <h2>Exemplo código base hello word!</h2>
-        <pre class="placeholder">
-          <code>
-            package main
+        <h2>Seção 3: Código do Servidor</h2>
+        <pre>
+<code>
+package main
 
-            import "fmt"
+import (
+  "github.com/gin-gonic/gin"
+)
 
-            func main() {
-                fmt.Println("Hello, World!")
-            }
-          </code> 
-      </pre>
-      </section>
+func main() {
+  router := gin.Default()
 
-      <section>
-        <h2>Seção 1: Pré-Requisitos e Setup</h2>
-        <ul class="placeholder links">
-          <li>
-            Instalacao do
-            <a href="https://go.dev/doc/install" target="_blank">compilador</a>.
-          </li>
-          <li>
-            Importacao do modulo
-            <a href="https://gin-gonic.com/pt/docs/" target="_blank">GIN</a>.
-          </li>
-        </ul>
-      </section>
+  // Carrega os templates HTML da pasta "templates"
+  router.LoadHTMLGlob("templates/*.html")
 
-      <section>
-        <h2>Seção 2: O Código do Servidor</h2>
-        <pre class="placeholder">
-          <code >
-            package main
-           
-            import (
-              "github.com/gin-gonic/gin"
-            )
-           
-            func main() {
-              route := gin.Default()
-           
-            
-              route.GET("/", func(c *gin.Context) {
-                html := ""
+  // Rota principal servindo a documentação
+  router.GET("/", func(c *gin.Context) {
+    c.HTML(200, "documentation.html", nil)
+  })
 
-                c.Header("Content-Type", "text/html; charset=utf-8")
-                c.String(200, html)
-              })
-           
-              route.Run(":8080")
-            }
-                 </code
-                   >
+  // Executa o servidor na porta 8080
+  router.Run()
+}
+</code>
         </pre>
-        <p>$ go run server.go</p>
+        <p>
+          O servidor acima utiliza o framework Gin para servir esta própria
+          documentação na rota principal (<code>/</code>). Ao executar
+          <code>go run server.go</code>, o sistema inicia um servidor HTTP local
+          acessível em
+          <a href="http://localhost:8080" target="_blank"
+            >http://localhost:8080</a
+          >.
+        </p>
       </section>
 
       <section>
-        <h2>Seção 3: Conclusão</h2>
+        <h2>Seção 4: Conclusão</h2>
         <p>
-          <strong>Principal dificuldade inicial:</strong>
-          <span class="placeholder">
-            A principal dificuldade foi compreender a estrutura de pacotes e
-            módulos no Go e configurar corretamente o mod init e as dependências
-            do Gin.</span
-          >
+          <strong>Principal dificuldade inicial:</strong> A compreensão da
+          estrutura de pacotes e módulos do Go, junto com o carregamento de
+          templates via Gin, exigiu prática para configurar corretamente o
+          ambiente e as dependências.
         </p>
         <p>
-          <strong>Recomendação final do grupo:</strong>
-          <span class="placeholder"
-            >O grupo recomenda fortemente o uso do Go + Gin para projetos que
-            exigem rapidez, estabilidade e escalabilidade. É uma excelente opção
-            para desenvolvedores que desejam aprender back-end de forma moderna,
-            com sintaxe limpa e excelente performance.</span
-          >
+          <strong>Pontos em comuns com outras linguagens:</strong>
+          Particularmente, sentimos muita semelhança na sintaxe com a mistura de
+          NodeJS com EXPRESS e C++. Na hora de colocar rodar o servidor, a forma
+          de fazer isso remete muito ao do NodeJS.
+        </p>
+        <p>
+          <strong>Recomendação final do grupo:</strong> O Go com o framework Gin
+          é uma excelente escolha para quem deseja desenvolver servidores
+          rápidos e modernos. O desempenho, a simplicidade e a clareza da
+          linguagem tornam o processo de aprendizado produtivo e recompensador.
         </p>
       </section>
+
+      <footer>Atividade prática – Servidores HTTP com Go e Gin © 2025</footer>
     </div>
   </body>
 </html>
